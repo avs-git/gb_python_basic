@@ -9,6 +9,17 @@
 # Ввод: -2/3 - -2
 # Вывод: 1 1/3
 
+# def parse_string(string):
+#     items = string.split(' ')
+#     for item in items:
+#         if not item.isnumeric() and len(item) == 1:
+#             action = item
+#
+#     print(action)
+#
+# parse_string('-2/3 - -2')
+
+
 
 # Задание-2:
 # Дана ведомость расчета заработной платы (файл "data/workers").
@@ -17,6 +28,7 @@
 # то их ЗП уменьшается пропорционально, а за заждый час переработки
 # они получают удвоенную ЗП, пропорциональную норме.
 # Кол-во часов, которые были отработаны, указаны в файле "data/hours_of"
+
 
 def get_workers():
     with open('data/workers', encoding='UTF-8') as f:
@@ -68,13 +80,10 @@ def calc_salary():
         norm = float(worker['norm'])
         worked = float(worker['worked'])
         salary = float(worker['salary'])
-        print(worker['surname'], salary, norm, worked)
-        if worked < norm:
-            print('>')
-            payment = salary * worked / norm
 
+        if worked <= norm:
+            payment = salary * worked / norm
         else:
-            print('<')
             payment = salary + (salary / norm) * 2 * (worked - norm)
 
         worker['payment'] = round(payment, 2)
