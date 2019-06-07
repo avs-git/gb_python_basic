@@ -95,6 +95,7 @@ def calc_fraction_expression(string):
 
     return f'{total} {fraction}'
 
+
 print(f'{"*" * 15} Задание1 {"*" * 15}')
 
 print('ответ: ', calc_fraction_expression('5/6 + 4/7'))
@@ -218,4 +219,3 @@ print('\n' * 2)
 print(f'{"*" * 15} Задание3 {"*" * 15}')
 
 put_fruits_to_files()
-

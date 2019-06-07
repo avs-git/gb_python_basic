@@ -97,7 +97,6 @@ print(text_date(date))
 print('\n' * 3)
 print(f'{"*" * 10} Задание 3 {"*" * 10}')
 
-
 import random
 
 a = []

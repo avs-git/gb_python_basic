@@ -33,7 +33,8 @@ def fibonacci(n, m):
     # n < m, возвращаем конец массива без вспомогательных элементов, добавленных ранее
     return fibo[n - m - 1:]
 
-print(fibonacci(3, 6))
+
+print(fibonacci(500000, 500004))
 
 # Задача-2:
 # Напишите функцию, сортирующую принимаемый список по возрастанию.
@@ -122,19 +123,44 @@ print(custom_filter(only_odd_filter, [1, 2, 3, 4, 5, 6]))
 print('\n' * 2)
 print(f'{"*" * 15} Задание 4 {"*" * 15}')
 
-a1, a2, a3, a4 = (1, 1), (5, 1), (15, 4), (19, 4)
-
 
 # принимает точки в любой последовательности
 # если все 4 точки на одной линии - False
 # прямоугольник - тоже параллелограм
 def is_parallelogram(*args):
-    arrX = sorted(list(map(lambda x: x[0], args)))
-    arrY = sorted(list(map(lambda x: x[1], args)))
+    print(args)
 
-    return arrX[1] - arrX[0] == arrX[3] - arrX[2] and arrY[0] == arrY[1] \
-           and arrY[2] == arrY[3] and arrY[2] != arrY[1] and arrX[2] != arrX[1]
+    if len(args) != 4:
+        return False
+
+    arrY = list(map(lambda x: x[1], args))
+
+    for i in args:
+        if arrY.count(i[1]) != 2:
+            return False
+
+    line2 = list(args)
+    line1 = [line2[0]]
+    line2.pop(0)
+
+    for i in line2:
+        if line1[0][1] == i[1]:
+            line1.append(i)
+            line2.remove(i)
+
+    line1 = sorted(line1)
+    line2 = sorted(line2)
+
+    if line1[1][0] - line1[0][0] != line2[1][0] - line2[0][0] or line1[1][0] - line1[0][0] == 0:
+        return False
+
+    return True
 
 
-print(a1, a2, a3, a4)
+# равнобедренная трапеция
+a1, a2, a3, a4 = (1, 5), (3, 1), (9, 5), (4, 1)
+print(is_parallelogram(a1, a2, a3, a4))
+
+# Параллелограмм
+a1, a2, a3, a4 = (1, 5), (3, 1), (9, 5), (11, 1)
 print(is_parallelogram(a1, a2, a3, a4))
