@@ -9,16 +9,96 @@
 # Ввод: -2/3 - -2
 # Вывод: 1 1/3
 
-# def parse_string(string):
-#     items = string.split(' ')
-#     for item in items:
-#         if not item.isnumeric() and len(item) == 1:
-#             action = item
-#
-#     print(action)
-#
-# parse_string('-2/3 - -2')
 
+def split_fraction(fraction):
+    """ возвращает переданную строку в виде неправильной дробь """
+    if ' ' in fraction:
+        temp = fraction.split(' ')
+        total = int(temp[0])
+        numenator = int(temp[1].split('/')[0])
+        denominator = int(temp[1].split('/')[1])
+        numenator = (denominator * abs(total) + numenator) * total / abs(total)
+
+        return {'num': numenator, 'denum': denominator}
+
+    if '/' in fraction:
+        temp = fraction.split('/')
+        numenator = int(temp[0])
+        denominator = int(temp[1])
+        return {'num': numenator, 'denum': denominator}
+
+    else:
+        return {'num': int(fraction), 'denum': 1}
+
+
+def get_gcd(a, b):
+    """ Возвращает наибольший общий знаменатель """
+    a, b = abs(a), abs(b)
+    while a != 0 and b != 0:
+        if a > b:
+            a %= b
+        else:
+            b %= a
+
+    return abs(a) or abs(b)
+
+
+def calc_fraction_expression(string):
+    print(string)
+    items = string.split(' ')
+    action = ''
+
+    for item in items:
+        if not item.isnumeric() and len(item) == 1:
+            action = item
+
+    side = string.split(f' {action} ')
+    left = split_fraction(side[0])
+    right = split_fraction(side[1])
+
+    common_denum = left['denum'] * right['denum']
+    left['num'] *= right['denum']
+    right['num'] *= left['denum']
+    print(f"{left['num']}/{common_denum} {action} {right['num']}/{common_denum}")
+    if action == '+':
+        result_num = left['num'] + right['num']
+
+    elif action == '-':
+        result_num = left['num'] - right['num']
+
+    else:
+        return f'{action} - непонятное действие'
+
+    print(f'{result_num}/{common_denum}')
+
+    gcd = get_gcd(result_num, common_denum)
+
+    result_num = int(result_num / gcd)
+    common_denum = int(common_denum / gcd)
+    print(f'общий знаменатель: {gcd}')
+
+    if abs(result_num) > common_denum:
+        total = result_num // common_denum
+        num = result_num % common_denum
+
+    elif abs(result_num) < common_denum:
+        total = ''
+        num = result_num
+
+    else:
+        total = result_num / common_denum
+        num, common_denum = '', ''
+
+    fraction = ''
+    if num:
+        fraction = f'{num}/{common_denum}'
+
+    return f'{total} {fraction}'
+
+print(f'{"*" * 15} Задание1 {"*" * 15}')
+
+print('ответ: ', calc_fraction_expression('5/6 + 4/7'))
+print('ответ: ', calc_fraction_expression('-2/3 - -2'))
 
 
 # Задание-2:
@@ -103,6 +183,9 @@ def get_salary_by_names():
     return result
 
 
+print('\n' * 2)
+print(f'{"*" * 15} Задание2 {"*" * 15}')
+
 for i in get_salary_by_names():
     print(i)
 
@@ -128,5 +211,11 @@ def put_fruits_to_files():
                 with open(f'data/fruits_{fruit[0].capitalize()}.txt', 'a', encoding='UTF-8') as fruit_file:
                     fruit_file.write(fruit)
 
+    print('фрукты разложены по файлам')
+
+
+print('\n' * 2)
+print(f'{"*" * 15} Задание3 {"*" * 15}')
 
 put_fruits_to_files()
+
