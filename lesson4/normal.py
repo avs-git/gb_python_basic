@@ -85,7 +85,7 @@ for i in range(len(num) - 1):
         cur_len += 1
     else:
         if cur_len > max_len:
-            max_len = cur_len
+            max_len = cur_len + 1
             max_num = num[i]
             position = i - max_len
         cur_len = 0
