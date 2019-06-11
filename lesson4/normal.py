@@ -22,14 +22,9 @@ line = 'mtMmEZUOmcqWi1234ry1234MQhhTxqKdSTKCYEJlEZCsGAMkgAYEOmHBSQsSUHKvSfbmxULa
        'zTYwZAiRwycdlHfyHNGmkNqSwXUrxGc'
 
 new_line = re.findall(r'([a-z]+)[A-Z]+([a-z]+)', line)
-new_iter = [e for l in new_line for e in l]
-print(new_iter)
-result = []
-for i in new_line:
-    for j in i:
-        result.append(j)
+flat_line = [e for l in new_line for e in l]
+print(flat_line)
 
-print(result)
 
 
 
